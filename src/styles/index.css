@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Poppins:wght@300;400;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* Ensure the Poppins font loads early and applies site-wide */
+  html, body { 
+    font-family: Poppins, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  }
+  
+  /* Prevent theme transition flashing with smooth color transitions */
+  html { 
+    scroll-behavior: smooth;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  body {
+    @apply text-cozy-800;
+    transition: background 0.4s ease-in-out, color 0.3s ease-in-out;
+  }
+  
+  /* warm pink-peach gradient background for the site (light mode) */
+  html:not(.dark) body { 
+    background: linear-gradient(180deg,#fff0f4 0%, #ffe7d6 45%, #ffd9c6 100%);
+  }
+  
+  /* Dark mode body background */
+  html.dark body {
+    background: linear-gradient(180deg,#0b1220 0%, #0f1724 45%, #111827 100%);
+    color: #e5e7eb;
+  }
+  
+  /* Smooth transitions for all interactive elements */
+  :focus { 
+    outline: 2px solid rgba(230,122,99,0.4); 
+    outline-offset: 2px;
+    transition: outline 0.2s ease;
+  }
+  /* gradient variants using CSS variables */
+  :root {
+    --sweep-opacity: 0.06;
+    --sweep-duration: 10s;
+  }
+  .site-variant-1 { --g1: #fff6f2; --g2: #ffe8dd; --g3: #f7d7c7; }
+  .site-variant-2 { --g1: #fffaf0; --g2: #ffead6; --g3: #f6d3c0; }
+  .site-variant-3 { --g1: #fff8f6; --g2: #ffe2d8; --g3: #f2cfc1; }
+
+  .bg-site-light { background: linear-gradient(180deg,var(--g1) 0%, var(--g2) 45%, var(--g3) 100%); }
+  .bg-site-dark { background: linear-gradient(180deg,#0b1220 0%, #0f1724 45%, #111827 100%); }
+
+  /* Replace light-mode white card backgrounds with a cozy peach tint to match the site aesthetic. 
+     This targets utility classes that include "bg-white" (e.g. bg-white/70, bg-white/80) but only in light mode. */
+  html:not(.dark) [class*="bg-white"] {
+    background-color: rgba(255, 244, 240, 0.88) !important;
+  }
+
+  /* subtle slow light sweep animation (uses CSS variables) */
+  @keyframes sweep {
+    0% { transform: translateX(-40%) rotate(8deg); opacity: 0 }
+    40% { opacity: var(--sweep-opacity) }
+    100% { transform: translateX(140%) rotate(8deg); opacity: 0 }
+  }
+  .gradient-sweep::before{
+    content: '';
+    position: absolute; inset: 0; pointer-events: none; z-index: 0;
+    background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.35) 50%, rgba(255,255,255,0) 100%);
+    transform: rotate(8deg);
+    animation: sweep var(--sweep-duration) linear infinite;
+    mix-blend-mode: overlay;
+    border-radius: inherit;
+  }
+
+  /* Z-index hierarchy: patterns behind content */
+  .decorative-pattern-layer {
+    z-index: 0;
+  }
+  
+  section {
+    position: relative;
+    z-index: 10;
+  }
+
+  /* accents reduced and subtler - ensure they stay in background */
+  .accent { 
+    position: absolute; 
+    pointer-events: none; 
+    opacity: 0.5; 
+    transform: translateZ(0);
+    z-index: 0;
+    transition: opacity 0.3s ease;
+  }
+  .accent.small { width: 28px; height: 28px }
+  .accent.faint { opacity: 0.3 }
+
+  /* Make image icons turn white in dark mode (like Phosphor icons) with smooth transition */
+  .icon-img {
+    transition: filter 0.3s ease, opacity 0.3s ease;
+  }
+  
+  .dark .icon-img {
+    filter: brightness(0) invert(1);
+    opacity: 0.9;
+  }
+  
+  /* Smooth card transitions to prevent jarring theme switches */
+  [class*="bg-white"],
+  [class*="bg-gray"] {
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  /* Enhanced hover states with smooth transitions */
+  .interactive-card {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+                box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                background-color 0.3s ease;
+  }
+  
+  .interactive-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px -8px rgba(230, 122, 99, 0.2);
+  }
+}
+

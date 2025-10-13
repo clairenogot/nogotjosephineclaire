@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100" fill="none">
+  <defs>
+    <g id="paw">
+      <!-- Three toe beans -->
+      <ellipse cx="15" cy="15" rx="4" ry="5" fill="#f09b88" opacity="0.4"/>
+      <ellipse cx="25" cy="10" rx="4.5" ry="6" fill="#f09b88" opacity="0.4"/>
+      <ellipse cx="35" cy="15" rx="4" ry="5" fill="#f09b88" opacity="0.4"/>
+      <!-- Main pad -->
+      <ellipse cx="25" cy="30" rx="10" ry="7" fill="#e67a63" opacity="0.35"/>
+    </g>
+  </defs>
+  <!-- Transparent background so it blends -->
+  <rect width="100" height="100" fill="transparent" />
+  <!-- Repeating paw pattern -->
+  <use href="#paw" x="0" y="0"/>
+  <use href="#paw" x="50" y="0"/>
+  <use href="#paw" x="0" y="50"/>
+  <use href="#paw" x="50" y="50"/>
+  <use href="#paw" x="25" y="25" opacity="0.5"/>
+</svg>
