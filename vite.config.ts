@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import react from '@vitejs/plugin-react' // or vue if using Vue
 
-// https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  base: './',  // use relative paths for hosting
+  plugins: [react()]
 })
