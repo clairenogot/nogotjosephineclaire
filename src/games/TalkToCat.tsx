@@ -554,14 +554,14 @@ export default function TalkToCat(){
       text: "Pro tip: Work in 25-minute blocks (Pomodoro), then take 5-minute breaks. Your brain will love you! 🍅",
       choices: [
         { id: 'moreTips', label: 'More tips!', next: 'productivity2' },
-        { id: 'implement', label: 'I'll try it', next: 'start' }
+        { id: 'implement', label: "I'll try it", next: 'start' }
       ]
     },
     productivity2: {
       text: "Tackle the hardest task first thing (when your energy is highest). Eat the frog, as they say! 🐸",
       choices: [
         { id: 'tip3', label: 'Another tip', next: 'productivity3' },
-        { id: 'start', label: 'Let's do this!', next: 'start' }
+        { id: 'start', label: "Let's do this!", next: 'start' }
       ]
     },
     productivity3: {
