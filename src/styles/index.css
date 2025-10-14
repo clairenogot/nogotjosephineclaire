@@ -17,7 +17,7 @@
   }
   
   body {
-    @apply text-cozy-800;
+    color: #7a2f26;
     transition: background 0.4s ease-in-out, color 0.3s ease-in-out;
   }
   
