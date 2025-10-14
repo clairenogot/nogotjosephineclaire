@@ -148,7 +148,7 @@ export default function Contact(){
               <p className="mt-2 text-sm sm:text-base text-cozy-700 dark:text-gray-300">"Every great story starts with a hello — let's create something wonderful together. 🧡"</p>
             </div>
             <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
-              <div className="text-xs sm:text-sm text-cozy-700 dark:text-gray-300 hidden sm:block">Mochi is sleeping now... but Claire will reply soon 💤</div>
+              <div className="text-xs sm:text-sm text-cozy-700 dark:text-gray-300">Mochi is sleeping now... but Claire will reply soon 💤</div>
               <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-cozy-200 dark:bg-gray-700 flex items-center justify-center text-lg sm:text-xl">😴</div>
             </div>
           </div>
@@ -229,7 +229,22 @@ export default function Contact(){
             >
               Say Hello!
             </motion.button>
-            <motion.div initial={{opacity:0}} animate={{opacity: hoverFooter ? 1 : 0}} transition={{duration:0.4}} className="text-xs sm:text-sm text-cozy-700 dark:text-gray-300 text-center sm:text-right hidden sm:block">Thanks for visiting my cozy corner of the web. Stay inspired and take care, hooman! 🐾</motion.div>
+            <motion.div 
+              initial={{opacity:0}} 
+              animate={{opacity: 1}} 
+              transition={{duration:0.4}} 
+              className="text-xs sm:text-sm text-cozy-700 dark:text-gray-300 text-center sm:text-right sm:hidden"
+            >
+              Thanks for visiting my cozy corner of the web. Stay inspired and take care, hooman! 🐾
+            </motion.div>
+            <motion.div 
+              initial={{opacity:0}} 
+              animate={{opacity: hoverFooter ? 1 : 0}} 
+              transition={{duration:0.4}} 
+              className="text-xs sm:text-sm text-cozy-700 dark:text-gray-300 text-center sm:text-right hidden sm:block"
+            >
+              Thanks for visiting my cozy corner of the web. Stay inspired and take care, hooman! 🐾
+            </motion.div>
           </div>
         </div>
       </motion.section>

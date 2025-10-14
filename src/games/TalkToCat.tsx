@@ -1130,17 +1130,17 @@ export default function TalkToCat(){
 
         <div className="p-3 border-t">
           <form onSubmit={handleSubmit} className="flex items-center gap-2">
-            <input value={input} onChange={e=>setInput(e.target.value)} placeholder="Say something to Mochi..." className="flex-1 p-2 rounded-full border" />
-            <button type="submit" className="p-2 rounded-full bg-cozy-200 hover:bg-cozy-300 dark:bg-cozy-700 dark:hover:bg-cozy-600 text-cozy-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-cozy-300" aria-label="Send message">
-              <PaperPlaneRight size={18} className="text-cozy-900 dark:text-white" />
+            <input value={input} onChange={e=>setInput(e.target.value)} placeholder="Say something to Mochi..." className="flex-1 p-2 text-sm sm:text-base rounded-full border dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-cozy-300" />
+            <button type="submit" className="p-3 sm:p-2 rounded-full bg-cozy-200 hover:bg-cozy-300 dark:bg-cozy-700 dark:hover:bg-cozy-600 text-cozy-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-cozy-300 flex-shrink-0" aria-label="Send message">
+              <PaperPlaneRight size={20} className="text-cozy-900 dark:text-white" />
             </button>
           </form>
 
           <div className="mt-3 grid grid-cols-2 md:grid-cols-4 gap-2">
             {(DIALOGUE[nodeId] && DIALOGUE[nodeId].choices) ? DIALOGUE[nodeId].choices!.map(c=> (
-              <button key={c.id} className="px-3 py-2 rounded bg-cozy-50 hover:bg-cozy-100 dark:bg-cozy-700 dark:hover:bg-cozy-600 dark:text-white text-cozy-900 focus:outline-none focus:ring-2 focus:ring-cozy-300" onClick={()=>handleChoice(c.id, c.label)}>{c.label}</button>
+              <button key={c.id} className="px-3 py-2 text-xs sm:text-sm rounded bg-cozy-50 hover:bg-cozy-100 dark:bg-cozy-700 dark:hover:bg-cozy-600 dark:text-white text-cozy-900 focus:outline-none focus:ring-2 focus:ring-cozy-300" onClick={()=>handleChoice(c.id, c.label)}>{c.label}</button>
             )) : (
-              <button className="px-3 py-2 rounded bg-cozy-50 hover:bg-cozy-100 dark:bg-cozy-700 dark:hover:bg-cozy-600 dark:text-white text-cozy-900 focus:outline-none focus:ring-2 focus:ring-cozy-300" onClick={()=>reset()}>Chat again</button>
+              <button className="px-3 py-2 text-xs sm:text-sm rounded bg-cozy-50 hover:bg-cozy-100 dark:bg-cozy-700 dark:hover:bg-cozy-600 dark:text-white text-cozy-900 focus:outline-none focus:ring-2 focus:ring-cozy-300" onClick={()=>reset()}>Chat again</button>
             )}
           </div>
         </div>
