@@ -1,5 +1,4 @@
 import React, { useRef, useState } from 'react'
-import emailjs from 'emailjs-com'
 import { motion } from 'framer-motion'
 import { EnvelopeSimple, LinkedinLogo, EnvelopeOpen } from 'phosphor-react'
 import { playClick, playPurr, playSend } from '../utils/sounds'
@@ -72,7 +71,7 @@ export default function Contact(){
     return isValid
   }
 
-  const sendEmail = (e: React.FormEvent) => {
+  const sendEmail = async (e: React.FormEvent) => {
     e.preventDefault()
     
     // Validate form before submission
@@ -84,11 +83,33 @@ export default function Contact(){
     setIsSubmitting(true)
     
     try {
-      const subject = encodeURIComponent(`Portfolio message from ${formData.from_name}`)
-      const body = encodeURIComponent(`Name: ${formData.from_name}\nEmail: ${formData.reply_to}\n\nMessage:\n${formData.message}`)
+      // Create FormData for submission
+      const formDataToSubmit = new FormData()
+      formDataToSubmit.append('from_name', formData.from_name)
+      formDataToSubmit.append('reply_to', formData.reply_to)
+      formDataToSubmit.append('message', formData.message)
+      formDataToSubmit.append('to_email', 'nogotjosephineclaire@gmail.com')
       
-      // Open mail client
-      window.location.href = `mailto:nogotjosephineclaire@gmail.com?subject=${subject}&body=${body}`
+      // Use Formspree (free alternative) or similar service
+      // For now, we'll use mailto as a fallback but with better UX
+      const subject = encodeURIComponent(`Portfolio Contact from ${formData.from_name}`)
+      const body = encodeURIComponent(
+        `Name: ${formData.from_name}\n` +
+        `Email: ${formData.reply_to}\n` +
+        `\n` +
+        `Message:\n` +
+        `${formData.message}\n` +
+        `\n` +
+        `---\n` +
+        `This message was sent via your portfolio website.`
+      )
+      
+      // Create a temporary link and trigger it
+      const mailtoLink = `mailto:nogotjosephineclaire@gmail.com?subject=${subject}&body=${body}`
+      const tempLink = document.createElement('a')
+      tempLink.href = mailtoLink
+      tempLink.target = '_blank'
+      tempLink.click()
       
       // Show success message
       setSent(true)
@@ -98,12 +119,12 @@ export default function Contact(){
       setTimeout(() => {
         setFormData({ from_name: '', reply_to: '', message: '' })
         setIsSubmitting(false)
-      }, 1000)
+      }, 2000)
     } catch (err) {
-      console.error('Failed to open mail client', err)
+      console.error('Failed to send message', err)
       setErrors(prev => ({ 
         ...prev, 
-        message: 'Unable to open your email client. Please email nogotjosephineclaire@gmail.com directly.' 
+        message: 'Unable to send message. Please email nogotjosephineclaire@gmail.com directly.' 
       }))
       setIsSubmitting(false)
     }
@@ -116,19 +137,19 @@ export default function Contact(){
                       formData.message.trim()
 
   return (
-    <section id="contact" className="py-20">
+    <section id="contact" className="py-12 sm:py-16 md:py-20 px-4 sm:px-6">
       {/* Let's Connect section above the message form */}
-  <motion.section onHoverStart={()=>setHoverFooter(true)} onHoverEnd={()=>setHoverFooter(false)} className="mb-8 py-10 px-6 rounded-xl mx-6 bg-gradient-to-br from-[#fff6ec] via-[#f6d7c7] to-[#f4c6c0] dark:bg-gradient-to-br dark:from-gray-800 dark:via-gray-800/70 dark:to-gray-900 relative overflow-hidden">
+  <motion.section onHoverStart={()=>setHoverFooter(true)} onHoverEnd={()=>setHoverFooter(false)} className="mb-8 py-6 sm:py-8 md:py-10 px-4 sm:px-6 rounded-xl mx-auto max-w-6xl bg-gradient-to-br from-[#fff6ec] via-[#f6d7c7] to-[#f4c6c0] dark:bg-gradient-to-br dark:from-gray-800 dark:via-gray-800/70 dark:to-gray-900 relative overflow-hidden">
         <div className="absolute inset-0 opacity-10 pointer-events-none" style={{backgroundImage: `url('/assets/paw-small.svg')`, backgroundRepeat: 'repeat', backgroundPosition: '0 0'}} />
-        <div className="mx-auto max-w-6xl">
-          <div className="flex flex-col md:flex-row items-center justify-between mb-6 gap-4">
-            <div>
-              <h3 className="text-2xl font-semibold dark:text-white">Let’s Connect</h3>
-              <p className="mt-2 text-cozy-700 max-w-xl dark:text-gray-300">“Every great story starts with a hello — let’s create something wonderful together.”</p>
+        <div className="w-full">
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-6 gap-4">
+            <div className="flex-1">
+              <h3 className="text-xl sm:text-2xl font-semibold dark:text-white">Let's Connect 🐾</h3>
+              <p className="mt-2 text-sm sm:text-base text-cozy-700 dark:text-gray-300">"Every great story starts with a hello — let's create something wonderful together. 🧡"</p>
             </div>
-            <div className="flex items-center gap-3">
-              <div className="text-sm text-cozy-700 dark:text-gray-300">Mochi is sleeping now... but Claire will reply soon 💤</div>
-              <div className="w-12 h-12 rounded-full bg-cozy-200 dark:bg-gray-700 flex items-center justify-center">😴</div>
+            <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+              <div className="text-xs sm:text-sm text-cozy-700 dark:text-gray-300 hidden sm:block">Mochi is sleeping now... but Claire will reply soon 💤</div>
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-cozy-200 dark:bg-gray-700 flex items-center justify-center text-lg sm:text-xl">😴</div>
             </div>
           </div>
 
@@ -196,23 +217,23 @@ export default function Contact(){
             </motion.a>
           </div>
 
-          <div className="mt-8 flex items-center justify-between">
+          <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
             <motion.button 
               onClick={()=>{ playPurr(true); document.getElementById('contact-form')?.scrollIntoView({behavior:'smooth'}) }} 
-              className="px-6 py-3 rounded-full bg-cozy-200 dark:bg-cozy-700 dark:text-white font-medium shadow-md hover:shadow-lg transition-all"
+              className="px-5 sm:px-6 py-2.5 sm:py-3 text-sm sm:text-base rounded-full bg-cozy-200 dark:bg-cozy-700 dark:text-white font-medium shadow-md hover:shadow-lg transition-all w-full sm:w-auto"
               whileHover={{scale:1.05, y:-2}}
               whileTap={{scale:0.98}}
             >
               Say Hello!
             </motion.button>
-            <motion.div initial={{opacity:0}} animate={{opacity: hoverFooter ? 1 : 0}} transition={{duration:0.4}} className="text-sm text-cozy-700 dark:text-gray-300">Thanks for visiting my cozy corner of the web. Stay inspired and take care, hooman! 🐾</motion.div>
+            <motion.div initial={{opacity:0}} animate={{opacity: hoverFooter ? 1 : 0}} transition={{duration:0.4}} className="text-xs sm:text-sm text-cozy-700 dark:text-gray-300 text-center sm:text-right hidden sm:block">Thanks for visiting my cozy corner of the web. Stay inspired and take care, hooman! 🐾</motion.div>
           </div>
         </div>
       </motion.section>
 
-      <div className="mx-auto max-w-4xl">
+      <div className="mx-auto max-w-4xl px-4 sm:px-0">
         <motion.h2 
-          className="text-2xl font-semibold mb-6 dark:text-white"
+          className="text-xl sm:text-2xl font-semibold mb-4 sm:mb-6 dark:text-white"
           initial={{opacity:0, x:-20}}
           whileInView={{opacity:1, x:0}}
           viewport={{once:true}}
@@ -221,7 +242,7 @@ export default function Contact(){
           Contact
         </motion.h2>
         <motion.div 
-          className="p-6 rounded-xl bg-white/70 dark:bg-gray-800/60 shadow-lg hover:shadow-xl interactive-card"
+          className="p-4 sm:p-6 rounded-xl bg-white/70 dark:bg-gray-800/60 shadow-lg hover:shadow-xl interactive-card"
           initial={{opacity:0, y:20}}
           whileInView={{opacity:1, y:0}}
           viewport={{once:true}}
@@ -317,8 +338,18 @@ export default function Contact(){
             </motion.button>
             <motion.a 
               href="/assets/NOGOT - CV.pdf" 
-              download 
-              className="px-6 py-3 rounded-lg border-2 border-cozy-300 dark:border-gray-600 bg-transparent hover:bg-cozy-50 dark:hover:bg-gray-700 dark:text-white font-medium transition-all text-center"
+              download="Josephine_Claire_Nogot_CV.pdf"
+              onClick={(e) => {
+                e.preventDefault()
+                // Create a temporary link for download
+                const link = document.createElement('a')
+                link.href = '/assets/NOGOT - CV.pdf'
+                link.download = 'Josephine_Claire_Nogot_CV.pdf'
+                document.body.appendChild(link)
+                link.click()
+                document.body.removeChild(link)
+              }}
+              className="px-6 py-3 rounded-lg border-2 border-cozy-300 dark:border-gray-600 bg-transparent hover:bg-cozy-50 dark:hover:bg-gray-700 dark:text-white font-medium transition-all text-center cursor-pointer"
               whileHover={{scale:1.02, y:-1}}
               whileTap={{scale:0.98}}
             >

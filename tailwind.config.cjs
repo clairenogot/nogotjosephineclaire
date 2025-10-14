@@ -1,6 +1,10 @@
+/** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
-  darkMode: 'class',
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}"
+  ],
+  darkMode: 'class', // enable class-based dark mode
   theme: {
     extend: {
       colors: {
@@ -20,11 +24,9 @@ module.exports = {
       backgroundImage: {
         'warm-gradient': 'linear-gradient(180deg,#fffaf6 0%, #ffe8dd 40%, #f6d7c9 100%)',
         'warm-gradient-dark': 'linear-gradient(180deg,#0f1724 0%, #111827 40%, #0b1220 100%)'
-      }
-      ,
+      },
       fontFamily: {
         sans: ['Poppins', 'ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
-        // map serif utilities to Poppins too so any `font-serif` uses Poppins
         serif: ['Poppins', 'Georgia', 'Cambria', "Times New Roman", 'Times', 'serif']
       }
     }

@@ -8,6 +8,8 @@
   /* Ensure the Poppins font loads early and applies site-wide */
   html, body { 
     font-family: Poppins, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    overflow-x: hidden;
+    width: 100%;
   }
   
   /* Prevent theme transition flashing with smooth color transitions */
@@ -19,6 +21,39 @@
   body {
     color: #7a2f26;
     transition: background 0.4s ease-in-out, color 0.3s ease-in-out;
+    min-height: 100vh;
+  }
+  
+  /* Prevent horizontal scroll and ensure proper mobile layout */
+  * {
+    max-width: 100%;
+  }
+  
+  /* Ensure images are responsive */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* Responsive container fix */
+  .container {
+    width: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  @media (min-width: 640px) {
+    .container {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .container {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
   }
   
   /* warm pink-peach gradient background for the site (light mode) */
