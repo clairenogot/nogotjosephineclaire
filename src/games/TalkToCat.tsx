@@ -1,7 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { PaperPlaneRight, Sparkle, PawPrint } from 'phosphor-react'
-import { playClick, playSend, playPurr, playMeow } from '../utils/sounds'
+import { PaperPlaneRight } from 'phosphor-react'
 
 type Msg = { id: string; speaker: 'mochi'|'you'; text: string; time?: string }
 
@@ -32,7 +31,6 @@ function getInitialMessages(): Msg[] {
 export default function TalkToCat(){
   const [messages, setMessages] = useState<Msg[]>(getInitialMessages())
   const [typing, setTyping] = useState(false)
-  const soundOn = true // always enabled, no UI toggle
   const [input, setInput] = useState('')
   const containerRef = useRef<HTMLDivElement | null>(null)
   const [nodeId, setNodeId] = useState<string>('start')
@@ -1001,16 +999,10 @@ export default function TalkToCat(){
     }
   }
 
-  useEffect(()=>{ // occasional purr for charm
-    const t = setInterval(()=>{ if(Math.random() < 0.02) playPurr(soundOn) }, 8000)
-    return ()=> clearInterval(t)
-  },[soundOn])
-
   const addMessage = (m: Msg)=> setMessages(s=>[...s, m])
 
   const pushUser = (text: string)=>{
     if(!text.trim()) return
-    playSend(soundOn)
     addMessage({ id:`u-${messages.length}`, speaker:'you', text, time: timeNow() })
     setInput('')
     scrollToBottom()
@@ -1018,11 +1010,10 @@ export default function TalkToCat(){
 
   const pushMochi = (text:string, delay = 600)=>{
     setTyping(true)
-    const randomDelay = delay + Math.random() * 400 // Add some variation
+    const randomDelay = delay + Math.random() * 400
     setTimeout(()=>{
       addMessage({ id:`m-${Date.now()}-${Math.random()}`, speaker:'mochi', text, time: timeNow() })
       setTyping(false)
-      playMeow(soundOn)
       scrollToBottom()
     }, randomDelay)
   }
@@ -1060,12 +1051,10 @@ export default function TalkToCat(){
   }
 
   function reset(){ 
-    playClick(soundOn) // Play click sound
-    playMeow(soundOn) // Add a meow for fun!
-    setMessages(getInitialMessages()) // Get new random greeting
+    setMessages(getInitialMessages())
     setTyping(false)
     setInput('') 
-    setNodeId('start') // Reset to start node
+    setNodeId('start')
     scrollToBottom()
   }
 
