@@ -5,14 +5,32 @@ import { playClick, playSend, playPurr, playMeow } from '../utils/sounds'
 
 type Msg = { id: string; speaker: 'mochi'|'you'; text: string; time?: string }
 
-const initialMsgs: Msg[] = [
-  { id: 'm-0', speaker: 'mochi', text: "Hi there, hooman! I'm Mochi, your cozy internet cat. What brings you here today?", time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }
+// Random greetings for Mochi
+const GREETINGS = [
+  "Hi there, hooman! I'm Mochi, your cozy internet cat. What brings you here today?",
+  "Meow! 🐱 I'm Mochi, and I'm here to chat! What's on your mind today?",
+  "Hey hooman! *stretches and yawns* Ready for a cozy conversation?",
+  "Welcome back! I'm Mochi, your friendly neighborhood cat. How can I make your day better?",
+  "Purrr... Hello there! Mochi here. Want to chat about something?",
+  "Oh, a visitor! *tail swishes excitedly* I'm Mochi. What adventure shall we go on today?",
+  "Hiiii! 😸 Mochi at your service! Feeling chatty? I'm all ears (and whiskers)!",
+  "*head bumps you gently* Hey there! I'm Mochi. Let's have a cozy chat!"
 ]
+
+function getRandomGreeting() {
+  return GREETINGS[Math.floor(Math.random() * GREETINGS.length)]
+}
 
 function timeNow(){ return new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }
 
+function getInitialMessages(): Msg[] {
+  return [
+    { id: `m-${Date.now()}`, speaker: 'mochi', text: getRandomGreeting(), time: timeNow() }
+  ]
+}
+
 export default function TalkToCat(){
-  const [messages, setMessages] = useState<Msg[]>(initialMsgs)
+  const [messages, setMessages] = useState<Msg[]>(getInitialMessages())
   const [typing, setTyping] = useState(false)
   const soundOn = true // always enabled, no UI toggle
   const [input, setInput] = useState('')
@@ -1000,12 +1018,13 @@ export default function TalkToCat(){
 
   const pushMochi = (text:string, delay = 600)=>{
     setTyping(true)
+    const randomDelay = delay + Math.random() * 400 // Add some variation
     setTimeout(()=>{
-      addMessage({ id:`m-${messages.length}`, speaker:'mochi', text, time: timeNow() })
+      addMessage({ id:`m-${Date.now()}-${Math.random()}`, speaker:'mochi', text, time: timeNow() })
       setTyping(false)
       playMeow(soundOn)
       scrollToBottom()
-    }, delay + Math.random()*500)
+    }, randomDelay)
   }
 
   function scrollToBottom(){
@@ -1040,7 +1059,15 @@ export default function TalkToCat(){
     else pushMochi('Ooh, tell me more!')
   }
 
-  function reset(){ setMessages(initialMsgs); setTyping(false); setInput('') }
+  function reset(){ 
+    playClick(soundOn) // Play click sound
+    playMeow(soundOn) // Add a meow for fun!
+    setMessages(getInitialMessages()) // Get new random greeting
+    setTyping(false)
+    setInput('') 
+    setNodeId('start') // Reset to start node
+    scrollToBottom()
+  }
 
   // inline CSS for messenger tails and animations
   const style = `
