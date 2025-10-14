@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { EnvelopeSimple, LinkedinLogo, EnvelopeOpen } from 'phosphor-react'
-import { playClick, playPurr, playSend } from '../utils/sounds'
+import { playClick, playPurr, playSend, playSuccess } from '../utils/sounds'
 
 export default function Contact(){
   const form = useRef<HTMLFormElement | null>(null)
@@ -113,7 +113,7 @@ export default function Contact(){
       
       // Show success message
       setSent(true)
-      playSend(true)
+      playSuccess(true) // Play the cozy success sound
       
       // Reset form after successful submission
       setTimeout(() => {
@@ -219,7 +219,10 @@ export default function Contact(){
 
           <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
             <motion.button 
-              onClick={()=>{ playPurr(true); document.getElementById('contact-form')?.scrollIntoView({behavior:'smooth'}) }} 
+              onClick={()=>{ 
+                playPurr(true); // Special purr sound for this button
+                document.getElementById('contact-form')?.scrollIntoView({behavior:'smooth'}) 
+              }} 
               className="px-5 sm:px-6 py-2.5 sm:py-3 text-sm sm:text-base rounded-full bg-cozy-200 dark:bg-cozy-700 dark:text-white font-medium shadow-md hover:shadow-lg transition-all w-full sm:w-auto"
               whileHover={{scale:1.05, y:-2}}
               whileTap={{scale:0.98}}
@@ -341,7 +344,7 @@ export default function Contact(){
               download="Josephine_Claire_Nogot_CV.pdf"
               onClick={(e) => {
                 e.preventDefault()
-                // Create a temporary link for download
+                // Create a temporary link for download (click sound handled globally)
                 const link = document.createElement('a')
                 link.href = '/assets/NOGOT - CV.pdf'
                 link.download = 'Josephine_Claire_Nogot_CV.pdf'

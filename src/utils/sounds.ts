@@ -11,13 +11,44 @@ export function playClick(enabled = true){
   const o = ctx.createOscillator()
   const g = ctx.createGain()
   o.type = 'sine'
-  o.frequency.value = 1000
-  g.gain.value = 0.002
+  o.frequency.value = 800 // Softer, warmer frequency
+  g.gain.value = 0.0018 // Slightly quieter
   o.connect(g)
   g.connect(ctx.destination)
   o.start()
-  g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.18)
-  o.stop(ctx.currentTime + 0.2)
+  o.frequency.exponentialRampToValueAtTime(600, ctx.currentTime + 0.05) // Gentle pitch drop for cozy feel
+  g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.15)
+  o.stop(ctx.currentTime + 0.16)
+}
+
+// Success sound - gentle, uplifting chime
+export function playSuccess(enabled = true){
+  if(!enabled) return
+  const ctx = getCtx()
+  
+  // Create a pleasant three-note chord
+  const frequencies = [523.25, 659.25, 783.99] // C5, E5, G5 - major chord
+  const oscillators: OscillatorNode[] = []
+  const gains: GainNode[] = []
+  
+  frequencies.forEach((freq, i) => {
+    const osc = ctx.createOscillator()
+    const gain = ctx.createGain()
+    
+    osc.type = 'sine'
+    osc.frequency.value = freq
+    gain.gain.value = 0.0015 // Gentle volume
+    
+    osc.connect(gain)
+    gain.connect(ctx.destination)
+    
+    osc.start(ctx.currentTime + i * 0.05) // Stagger notes slightly
+    gain.gain.exponentialRampToValueAtTime(0.00001, ctx.currentTime + 0.6)
+    osc.stop(ctx.currentTime + 0.65)
+    
+    oscillators.push(osc)
+    gains.push(gain)
+  })
 }
 
 // Simple synthesized 'meow' using pitch sweep
@@ -215,4 +246,4 @@ export function toggleAmbient(){
   else startAmbient(ambientState.volume)
 }
 
-export default { playClick, playMeow, playSend, playPurr, startAmbient, stopAmbient, toggleAmbient, setAmbientVolume }
+export default { playClick, playMeow, playSend, playPurr, playSuccess, startAmbient, stopAmbient, toggleAmbient, setAmbientVolume }

@@ -8,8 +8,12 @@ import Education from './sections/Education'
 import Projects from './sections/Projects'
 import CatGame from './sections/CatGame'
 import Contact from './sections/Contact'
+import { useCozyClick } from './hooks/useCozyClick'
 
 export default function App(){
+  // Add cozy click sounds to all interactive elements
+  useCozyClick()
+
   return (
     <div className="font-sans min-h-screen text-cozy-800 dark:text-gray-100 transition-colors duration-500 bg-site-light dark:bg-site-dark relative gradient-sweep overflow-x-hidden">
       <DecorativeAccents />

@@ -9,6 +9,7 @@ export default function Navbar(){
   const [scrolled, setScrolled] = useState(false)
   const [dark, setDark] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [activeSection, setActiveSection] = useState('home')
   const soundOn = true // always enabled, no UI toggle
 
   useEffect(()=>{
@@ -20,6 +21,29 @@ export default function Navbar(){
   useEffect(()=>{
     document.documentElement.classList.toggle('dark', dark)
   },[dark])
+
+  // Track active section based on scroll position
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = ['home', 'about', 'skills', 'education', 'projects', 'cat-game', 'contact']
+      const scrollPosition = window.scrollY + 100 // offset for navbar
+
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = document.getElementById(sections[i])
+        if (section) {
+          const { offsetTop } = section
+          if (scrollPosition >= offsetTop) {
+            setActiveSection(sections[i])
+            break
+          }
+        }
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    handleScroll() // Initial check
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   // Prevent body scroll when mobile menu is open
   useEffect(() => {
@@ -36,7 +60,7 @@ export default function Navbar(){
   const scrollTo = (id: string) => {
     const el = document.getElementById(id)
     el?.scrollIntoView({behavior:'smooth', block:'start'})
-    playClick(soundOn)
+    // Sound already handled by global hook, just add meow sometimes
     setMobileMenuOpen(false) // Close mobile menu after navigation
     // randomly meow on some clicks
     if(Math.random() < 0.12) playMeow(soundOn)
@@ -57,7 +81,11 @@ export default function Navbar(){
               <li key={s}>
                 <button 
                   onClick={()=> scrollTo(sections[i])} 
-                  className="px-2 lg:px-3 py-1 text-sm lg:text-base rounded-lg hover:bg-cozy-100/60 dark:hover:bg-gray-700/50 transition"
+                  className={`px-2 lg:px-3 py-1 text-sm lg:text-base rounded-lg transition ${
+                    activeSection === sections[i] 
+                      ? 'bg-cozy-200/80 dark:bg-cozy-600/50 text-cozy-900 dark:text-white font-medium shadow-sm' 
+                      : 'hover:bg-cozy-100/60 dark:hover:bg-gray-700/50'
+                  }`}
                 >
                   {s}
                 </button>
@@ -136,7 +164,11 @@ export default function Navbar(){
                       >
                         <button 
                           onClick={()=> scrollTo(sections[i])} 
-                          className="w-full text-left px-4 py-3 rounded-lg hover:bg-cozy-100/60 dark:hover:bg-gray-700/50 transition font-medium"
+                          className={`w-full text-left px-4 py-3 rounded-lg transition font-medium ${
+                            activeSection === sections[i]
+                              ? 'bg-cozy-200/80 dark:bg-cozy-600/50 text-cozy-900 dark:text-white shadow-sm'
+                              : 'hover:bg-cozy-100/60 dark:hover:bg-gray-700/50'
+                          }`}
                         >
                           {s}
                         </button>
