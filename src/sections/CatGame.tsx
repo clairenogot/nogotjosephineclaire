@@ -5,7 +5,7 @@ import TalkToCat from '../games/TalkToCat'
 
 export default function CatGame(){
   return (
-    <section id="cat-game" className="py-20">
+    <section id="cat-game" className="py-12 sm:py-16 md:py-20">
       <div className="mx-auto max-w-4xl">
         <motion.h2 
           initial={{opacity:0, x:-20}} 

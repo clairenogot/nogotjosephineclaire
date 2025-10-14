@@ -1130,9 +1130,9 @@ export default function TalkToCat(){
 
         <div className="p-3 border-t">
           <form onSubmit={handleSubmit} className="flex items-center gap-2">
-            <input value={input} onChange={e=>setInput(e.target.value)} placeholder="Say something to Mochi..." className="flex-1 p-2 text-sm sm:text-base rounded-full border dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-cozy-300" />
-            <button type="submit" className="p-3 sm:p-2 rounded-full bg-cozy-200 hover:bg-cozy-300 dark:bg-cozy-700 dark:hover:bg-cozy-600 text-cozy-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-cozy-300 flex-shrink-0" aria-label="Send message">
-              <PaperPlaneRight size={20} className="text-cozy-900 dark:text-white" />
+            <input value={input} onChange={e=>setInput(e.target.value)} placeholder="Say something to Mochi..." className="flex-1 p-2.5 sm:p-2 text-sm sm:text-base rounded-full border dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-cozy-300 min-w-0" />
+            <button type="submit" className="p-3 rounded-full bg-cozy-200 hover:bg-cozy-300 dark:bg-cozy-700 dark:hover:bg-cozy-600 text-cozy-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-cozy-300 flex-shrink-0 w-12 h-12 flex items-center justify-center" aria-label="Send message">
+              <PaperPlaneRight size={22} weight="fill" className="text-cozy-900 dark:text-white" />
             </button>
           </form>
 

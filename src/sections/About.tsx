@@ -1,9 +1,9 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 
-export default function About() {
+export default function About(){
   return (
-    <section id="about" className="py-20">
+    <section id="about" className="py-12 sm:py-16 md:py-20">
       <div className="mx-auto max-w-4xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

@@ -28,7 +28,7 @@ const education = [
 
 export default function Education() {
   return (
-    <section id="education" className="py-20">
+    <section id="education" className="py-12 sm:py-16 md:py-20">
       <div className="mx-auto max-w-5xl">
         <h2 className="text-2xl font-semibold mb-8 flex items-center gap-2 dark:text-white">
           <GraduationCap size={28} className="text-cozy-600 dark:text-cozy-300" /> 
