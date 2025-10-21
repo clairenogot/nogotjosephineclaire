@@ -5,6 +5,9 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   base: '/',
+  optimizeDeps: {
+    include: ['framer-motion']
+  },
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
