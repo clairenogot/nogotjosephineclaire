@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "preinstall": "rm -rf node_modules || true",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
@@ -17,7 +18,6 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@rolldown/pluginutils": "^0.20.0",
     "@types/node": "^20.11.0",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
