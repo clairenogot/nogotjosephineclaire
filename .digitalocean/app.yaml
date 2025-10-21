@@ -3,10 +3,10 @@ region: nyc
 static_sites:
   - name: portfolio-frontend
     github:
-      repo: clairenogot/myportfolio
+      repo: clairenogot/nogotjosephineclaire
       branch: main
       deploy_on_push: true
-    build_command: npm ci && npm run build
+    build_command: rm -rf node_modules package-lock.json && npm install && npm run build
     output_dir: dist
     index_document: index.html
     error_document: index.html
@@ -15,4 +15,6 @@ static_sites:
     environment_slug: node-js
     envs:
       - key: NODE_VERSION
-        value: "18.18.0"
+        value: "20.11.0"
+      - key: NODE_MODULES_CACHE
+        value: "false"
